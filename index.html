@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Comparador Etanol vs Gasolina</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      color:white;
+    }
+
+    .container{
+      width:100%;
+      max-width:500px;
+      background:#111827;
+      padding:30px;
+      border-radius:20px;
+      box-shadow:0 0 25px rgba(0,0,0,0.4);
+    }
+
+    h1{
+      text-align:center;
+      margin-bottom:25px;
+      color:#38bdf8;
+    }
+
+    .input-group{
+      margin-bottom:20px;
+    }
+
+    label{
+      display:block;
+      margin-bottom:8px;
+      font-weight:bold;
+    }
+
+    input{
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:10px;
+      font-size:16px;
+      outline:none;
+    }
+
+    button{
+      width:100%;
+      padding:15px;
+      border:none;
+      border-radius:12px;
+      background:#38bdf8;
+      color:#0f172a;
+      font-size:18px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    button:hover{
+      background:#0ea5e9;
+      transform:scale(1.02);
+    }
+
+    .resultado{
+      margin-top:25px;
+      padding:20px;
+      border-radius:12px;
+      background:#1e293b;
+      text-align:center;
+      font-size:22px;
+      font-weight:bold;
+      display:none;
+    }
+
+    .etanol{
+      color:#22c55e;
+    }
+
+    .gasolina{
+      color:#f59e0b;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>⛽ Etanol vs Gasolina</h1>
+
+    <div class="input-group">
+      <label>Preço do Etanol (R$)</label>
+      <input type="number" id="etanol" step="0.01" placeholder="Ex: 4.29">
+    </div>
+
+    <div class="input-group">
+      <label>Preço da Gasolina (R$)</label>
+      <input type="number" id="gasolina" step="0.01" placeholder="Ex: 6.19">
+    </div>
+
+    <button onclick="comparar()">Comparar</button>
+
+    <div class="resultado" id="resultado"></div>
+  </div>
+
+  <script>
+    function comparar() {
+      const etanol = parseFloat(document.getElementById("etanol").value);
+      const gasolina = parseFloat(document.getElementById("gasolina").value);
+      const resultado = document.getElementById("resultado");
+
+      if (isNaN(etanol) || isNaN(gasolina)) {
+        resultado.style.display = "block";
+        resultado.innerHTML = "⚠️ Preencha os dois valores.";
+        return;
+      }
+
+      // diferença entre gasolina e etanol
+      const diferenca = gasolina - etanol;
+
+      resultado.style.display = "block";
+
+      // Se o etanol estiver até R$2 mais barato,
+      // ainda compensa gasolina
+      if (diferenca <= 2) {
+        resultado.innerHTML = `
+          ⛽ Compensa abastecer com 
+          <span class="gasolina">GASOLINA</span>
+        `;
+      } else {
+        resultado.innerHTML = `
+          ✅ Compensa abastecer com 
+          <span class="etanol">ETANOL</span>
+        `;
+      }
+    }
+  </script>
+
+</body>
+</html>
